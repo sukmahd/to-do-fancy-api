@@ -60,7 +60,7 @@ function getTask(req,res){
   .then(result=>{
     res.send(result)
   })
-  .catch(err{
+  .catch(err=>{
     res.send(err)
   })
 }

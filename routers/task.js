@@ -2,7 +2,7 @@
 
 const express = require('express')
 const router  = express.Router()
-const controller = require('../controller/taskControlller')
+const controller = require('../controller/taskController')
 
 router.get('/', controller.getTask)
 router.get('/:id', controller.findTask)

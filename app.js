@@ -3,9 +3,9 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
 mongoose.connect('mongodb://localhost/todo-fancy-api')
 
-const search = require('./routers/search')
 const cors = require('cors')
 
 app.use(bodyParser.urlencoded({ extended:true }));
@@ -22,5 +22,7 @@ app.get('/', function(req,res){
   res.send('hello its me')
 })
 
+app.use('/user', User)
+app.use('/task', Task)
 
 app.listen(3000)

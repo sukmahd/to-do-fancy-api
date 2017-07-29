@@ -10,7 +10,8 @@ function signup(req,res){
   User.create({
     name: req.body.name,
     password: pass,
-    email: req.body.email
+    email: req.body.email,
+    key: key
   })
   .then(log=>{
     res.send(log)
@@ -45,22 +46,54 @@ function signin(req, res){
 }
 
 function addTask(req, res){
-  User.update({
+  User.where({
     _id: req.params.id
-  },{
+  })
+  .update({
     $push:{
-      task_list: req.body.task_id
+      task_list: req.body.task_list
     }
+  })
+  .then(log=>{
+    res.send(log)
+  })
+  .catch(err=>{
+    res.send(err)
   })
 }
 
 function removeTask(req, res){
-
+  User.findOne({
+    _id:req.params.id
+  })
+  .then(row=>{
+    const task = row.task_list;
+    for(let i = 0; i < task.length; i++){
+      if(task[i] == req.params.idT){
+        task.splice(i,1)
+      }
+    }
+    User.where({
+      _id:req.params.id
+    })
+    .update({
+      task_list: task
+    })
+    .then(log=>{
+      res.send(log)
+    })
+    .catch(err=>{
+      res.send(log)
+    })
+  })
+  .catch(err=>{
+    res.send(err)
+  })
 }
 
 function showTask(req, res){
   User.findOne({
-    email:req.body.email
+    _id:req.params.id
   })
   .populate('task_list')
   .then(result=>{

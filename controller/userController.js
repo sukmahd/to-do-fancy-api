@@ -4,7 +4,7 @@ const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 const helper = require('../helpers/registerHelpers')
 
-function register(req,res){
+function signup(req,res){
   const key = helper.randomKey();
   const pass = helper.hash(req.body.password, key)
   User.create({
@@ -20,7 +20,7 @@ function register(req,res){
   })
 }
 
-function login(req, res){
+function signin(req, res){
   User.findOne({
     email: req.body.email
   })
@@ -58,9 +58,24 @@ function removeTask(req, res){
 
 }
 
+function showTask(req, res){
+  User.findOne({
+    email:req.body.email
+  })
+  .populate('task_list')
+  .then(result=>{
+    res.send(result)
+  })
+  .catch(err=>{
+    res.send(err)
+  })
+}
+
+
 module.exports = {
-  register,
+  signup,
   addTask,
-  login,
-  removeTask
+  signin,
+  removeTask,
+  showTask
 };

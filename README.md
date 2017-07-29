@@ -11,8 +11,15 @@ List of todo routes:
 | -------------      |:-------------:| :----------------|
 | /todo/signin       |POST           | Login   |
 | /todo/signup       |POST           | Register with new user info   |
-| /todo/users        |GET            | Get all todo list    |
-| /todo/users/:id    |GET            | Get specify todo info     |
-| /todo/users        |POST           | post new todo task|
-| /todo/users/:id    |DELETE         | delete todo task|
-| /todo/users/:id    |PUT            | edit task info|
+| /todo/user        |GET            | Get all todo list on authen user|
+| /todo/user/:id    |GET            | Get specify todo info on authen user|
+| /todo/user        |POST           | post new todo task|
+| /todo/user/:id    |DELETE         | delete todo task|
+| /todo/user/:id    |PUT            | edit task info|
+
+
+| /todo/task        |GET            | Get all todo list    |
+| /todo/task/:id    |GET            | Get specify todo info     |
+| /todo/task        |POST           | post new todo task|
+| /todo/task/:id    |DELETE         | delete todo task|
+| /todo/task/:id    |PUT            | edit task info|

@@ -11,6 +11,10 @@ const taskSchema = new Schema({
   tags:{
     type: Array,
     required:false
+  },
+  status:{
+    type: String,
+    required:  true
   }
 },{
   timestapms:{

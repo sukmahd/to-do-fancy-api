@@ -7,6 +7,7 @@ function createTask(req,res){
   Task.create({
     task_name: req.body.task_name,
     tags: req.body.tag,
+    status: 'false'
   })
   .then(log=>{
     res.send(log)

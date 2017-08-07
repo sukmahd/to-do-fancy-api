@@ -17,6 +17,10 @@ const userSchema = new Schema({
     required: true,
     unique: true
   },
+  tag:{
+    type: Array,
+    required:false
+  },
   key:{
     type: String,
     required:true

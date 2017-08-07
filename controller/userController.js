@@ -11,7 +11,8 @@ function signup(req,res){
     name: req.body.name,
     password: pass,
     email: req.body.email,
-    key: key
+    key: key,
+    tag: 'home'
   })
   .then(log=>{
     res.send(log)
@@ -30,13 +31,17 @@ function signin(req, res){
     const pass = helper.hash(req.body.password, key )
     if(row.password == pass){
       const token = jwt.sign({
+        id: row._id,
         name:row.name,
         email: row.email,
-        task_list: row.task_list
+        task_list: row.task_list,
+        tag: row.tag
       }, 'YttsA')
       req.headers.token = token
-      res.send(token)
+      console.log(token, 'ini token waktu login');
+      res.send({token:token, id: row._id})
     }else {
+      console.log('salah pass');
       res.send('password salah')
     }
   })
@@ -53,6 +58,38 @@ function addTask(req, res){
     $push:{
       task_list: req.body.task_list
     }
+  })
+  .then(log=>{
+    res.send(log)
+  })
+  .catch(err=>{
+    res.send(err)
+  })
+}
+
+function addTag(req,res){
+  User.where({
+    _id:req.params.id
+  })
+  .update({
+    $push:{
+      tag:req.body.tag
+    }
+  })
+  .then(log=>{
+    res.send(log)
+  })
+  .catch(err=>{
+    res.send(err)
+  })
+}
+
+function removeTag(req,res){
+  User.where({
+    _id:req.params.id
+  })
+  .update({
+    tag: req.body.tag
   })
   .then(log=>{
     res.send(log)
@@ -92,15 +129,19 @@ function removeTask(req, res){
 }
 
 function showTask(req, res){
-  User.findOne({
-    _id:req.params.id
-  })
-  .populate('task_list')
-  .then(result=>{
-    res.send(result)
-  })
-  .catch(err=>{
-    res.send(err)
+  const token = req.headers.token
+  console.log(token, 'asdasd');
+  jwt.verify(token, 'YttsA', function(err, decode){
+    User.findOne({
+      _id:decode.id
+    })
+    .populate('task_list')
+    .then(result=>{
+      res.send(result)
+    })
+    .catch(err=>{
+      res.send(err)
+    })
   })
 }
 
@@ -110,5 +151,7 @@ module.exports = {
   addTask,
   signin,
   removeTask,
-  showTask
+  showTask,
+  addTag,
+  removeTag
 };

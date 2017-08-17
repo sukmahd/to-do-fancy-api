@@ -46,7 +46,7 @@ function editTask(req,res){
     _id: req.params.id
   })
   .update({
-    task_name: req.body.task_name
+    status: req.body.status
   })
   .then(log=>{
     res.send(log)

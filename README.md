@@ -23,3 +23,14 @@ List of todo routes:
 | /todo/task        |POST           | post new todo task|
 | /todo/task/:id    |DELETE         | delete todo task|
 | /todo/task/:id    |PUT            | edit task info|
+
+
+##how to run
+
+```bash
+npm install
+
+npm start
+```
+
+need mongo service
